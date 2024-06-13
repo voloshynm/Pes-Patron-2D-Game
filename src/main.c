@@ -13,5 +13,6 @@
 
 int main()
 {
+    ft_printf("I love my pupsula");
     
 }
