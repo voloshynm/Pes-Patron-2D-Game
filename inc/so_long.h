@@ -29,15 +29,14 @@
 # define GO_DOWN 1
 # define GO_LEFT -1
 # define GO_RIGHT 1
-/*
+
 enum e_state
 {
-	OK = 0,
+	IN_PLAY = 1,
 	GAME_OVER = -1,
-	ERROR = 2,
-	FILE_ERROR = 3,
-	MAP_ERROR = 4,
-	IMAGE_INIT = 5,
+	ARG_ERROR = -2,
+	MAP_ERROR = -3,
+	IMAGE_INIT = 5
 };
-*/
+
 #endif

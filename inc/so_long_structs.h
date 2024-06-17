@@ -18,25 +18,15 @@ typedef struct s_actor
 }	t_actor;
 
 // To cnt items for map validation and gameplay 
-typedef struct s_map_counter
+typedef struct s_counter
 {
 	int	players;
 	int	enemies;
 	int	exits;
 	int	total_gems;
 	int	taken_gems;
-}	t_map_counter;
-
-// 2D plot and it's features
-typedef struct s_map
-{
-	char			**plot;
-	char			*tmp_line;
-	int				x_size;
-	int				y_size;
-	t_map_counter	*cnt;
-	bool			is_valid;
-}	t_map;
+	int	moves;
+}	t_counter;
 
 // To parse sprite
 typedef struct s_texture
@@ -61,13 +51,15 @@ typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_map		*map;
+	char		**map;
+	char		*tmp_line;
+	int			map_x_len;
+	int			map_y_len;
+	t_counter	*cnt;
 	t_actor		*player;
 	t_actor		**enemies;
 	t_texture	*texture;
-	bool		is_win;
-	bool		is_defeat;
-	int			cnt_moves;
+	int			state;
 }	t_game;
 
 #endif
