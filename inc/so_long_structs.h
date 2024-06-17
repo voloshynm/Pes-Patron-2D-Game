@@ -39,25 +39,32 @@ typedef struct s_map
 }	t_map;
 
 // To parse sprite
-typedef struct s_img
+typedef struct s_texture
 {
-	void	*ptr;
-	int		*pixels;
-	int		line_size;
-	int		mem;
-	int		x;
-	int		y;
-	int		movements;
-}	t_img;
+	void	*player_l[4];
+	void	*player_r[4];
+	void	*enemy_l[4];
+	void	*enemy_r[4];
+	void	*gem[4];
+	void	*exit[2];
+	void	*wall;
+	void	*floor;
+	int		*px_size;
+	int		*px_height;
+	int		*px_width;
+	int		keyframe;
+	int		frame;
+}	t_texture;
 
 // Gameplay
 typedef struct s_game
 {
-	void		*mlx_pointer;
-	void		*window_pointer;
+	void		*mlx_ptr;
+	void		*win_ptr;
 	t_map		*map;
 	t_actor		*player;
 	t_actor		**enemies;
+	t_texture	*texture;
 	bool		is_win;
 	bool		is_defeat;
 	int			cnt_moves;
