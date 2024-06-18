@@ -3,25 +3,24 @@
 
 # include <stdbool.h>	//bool
 
-// To store item's coordinates
-typedef struct s_coordinates
+typedef struct s_point
 {
-	int	x;
-	int	y;
-}	t_coordinates;
+    int x;
+	int y;
+} t_point;
 
 // For active game actors (player and enemies)
 typedef struct s_actor
 {
-	t_coordinates	*position;
-	t_coordinates	*best_move;
+	t_point	pos;
+	t_point	best_move;
 }	t_actor;
 
 // To cnt items for map validation and gameplay 
 typedef struct s_counter
 {
 	int	players;
-	int	enemies;
+	int	foes;
 	int	exits;
 	int	total_gems;
 	int	taken_gems;
@@ -33,8 +32,8 @@ typedef struct s_texture
 {
 	void	*player_l[4];
 	void	*player_r[4];
-	void	*enemy_l[4];
-	void	*enemy_r[4];
+	void	*foe_l[4];
+	void	*foe_r[4];
 	void	*gem[4];
 	void	*exit[2];
 	void	*wall;
@@ -57,7 +56,7 @@ typedef struct s_game
 	int			map_y_len;
 	t_counter	*cnt;
 	t_actor		*player;
-	t_actor		**enemies;
+	t_actor		*foe;
 	t_texture	*texture;
 	int			state;
 }	t_game;

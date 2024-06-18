@@ -36,7 +36,14 @@ enum e_state
 	GAME_OVER = -1,
 	ARG_ERROR = -2,
 	MAP_ERROR = -3,
+	ALLOC_ERROR = -4,
 	IMAGE_INIT = 5
 };
+
+//Functions
+
+// Initializing the game
+int		init_map(t_game *g, char *file_name);
+void	init_game(t_game *g, int argc, char **argv);
 
 #endif

@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 #include "../inc/so_long.h"
 
-int	validate_file_name(char *s)
+static int	validate_file_name(char *s)
 {
-	char	*ext;
 	int		len;
 
 	len = ft_strlen(s);
@@ -24,69 +23,40 @@ int	validate_file_name(char *s)
 	return (IN_PLAY);
 }
 
-int	parse_map (t_game *game)
-{
-
-}
-
-int	init_map(t_game *game, char *file_name)
-{
-	int		fd;
-	int		i;
-
-	i = 1;
-	fd = open(file_name, O_RDONLY);
-	game->map[0] = get_next_line(fd);
-	if (game->map[0] == NULL)
-		return (MAP_ERROR);
-	game->map_x_len = ft_strlen(game->map[0]);
-	game->map_y_len = 0;
-	while(1)
-	{
-		game->tmp_line = get_next_line(fd);
-		if (game->tmp_line == NULL && game->map_x_len != 0)
-			break;
-		game->map_x_len = ft_strlen(game->tmp_line);
-		if (game->map_x_len != ft_strlen(game->map[i - 1]) || game->map_x_len < 3)
-			return (MAP_ERROR);
-		game->map[i++] = game->tmp_line;
-		game->map_y_len++;
-	}
-	parse_map(&game);
-	return (IN_PLAY);
-}
-
-
-void	init_game(t_game *game, int argc, char **argv)
+void	init_game(t_game *g, int argc, char **argv)
 {
 	char	*file_name;
 
-	file_name = argv[1];
-	if (argc != 2 || (argc == 2 && validate_file_name(file_name) == ARG_ERROR))
+	g->state = validate_file_name(argv[1]);
+	(void)argc;/*
+	if (argc != 2 || (argc == 2 && g->state == ARG_ERROR))
 	{
-		ft_printf("ERROR: number of arguments or map name is incorrect");
-		game->state == ARG_ERROR;
-	}
-	game->state == init_map(game->map, file_name);
-	if (validate_map(game->map) == MAP_ERROR)
-	{
-		ft_printf("ERROR: selected map is invalid, game is not possible");
-		game->state == MAP_ERROR;
-	}
+		ft_printf("ERROR: number of arguments or map name is incorrect\n");
+		return ;
+	}*/
+    file_name = ft_strjoin("", argv[1]);
+	ft_printf("%s\n", file_name);
+	g->state = init_map(g, file_name);
+	free(file_name);
+	if (g->state == MAP_ERROR)
+		ft_printf("ERROR: selected map is invalid, game is not possible\n");
+	if (g->state == ALLOC_ERROR)
+		ft_printf("ERROR: there's not enough memory, game is not possible\n");
 }
+
 
 int main(int argc, char **argv)
 {
-	t_game  game;
+	t_game  g;
 	
-	init_game(&game, argc, argv);
-	while(game.state == IN_PLAY)
+	init_game(&g, argc, argv);
+/*	while(g.state == IN_PLAY)
 	{
-		mlx_hook(game->mlx_ptr, KeyPress, KeyPressMask, &on_keypress, data);
-		mlx_hook(game->win_ptr, DestroyNotify, StructureNotifyMask,
+		mlx_hook(g->mlx_ptr, KeyPress, KeyPressMask, &on_keypress, data);
+		mlx_hook(g->win_ptr, DestroyNotify, StructureNotifyMask,
 			&game_destroy, data);
-		mlx_loop_hook(game->mlx_ptr, &refresh, data);
-		mlx_loop(game->mlx_ptr);
+		mlx_loop_hook(g->mlx_ptr, &refresh, data);
+		mlx_loop(g->mlx_ptr);
 	}
-	free_game(&game);
+	free_g(&g);*/
 }
