@@ -82,28 +82,45 @@ int	init_map(t_game *g, char *file_name)
 	int		fd;
 	int		i;
 
-	i = 1;
-	file_name = "small.txt";
-	fd = open(file_name, O_RDONLY);
-	g->map[0] = get_next_line(fd);
-	ft_printf("%s", g->map[0]);
-	if (g->map[0] == NULL)
+	i = -1;
+	g->map_y_len = get_number_of_lines(file_name);
+	if (g->map_y_len == NULL)
 		return (MAP_ERROR);
-	g->map_x_len = ft_strlen(g->map[0]);
-	g->map_y_len = 0;
-	while(1)
+	g->map = ft_calloc(g->map_y_len, sizeof(char *));
+	fd = open(file_name, O_RDONLY);
+	while(i++ < g->map_y_len)
 	{
-		g->tmp_line = get_next_line(fd);
-		if (g->tmp_line == NULL && g->map_x_len != 0)
-			break;
-		g->map_x_len = (int)ft_strlen(g->tmp_line);
-		if (g->map_x_len != (int)ft_strlen(g->map[i - 1])
+		g->map[i] = get_next_line(fd);
+		g->map_x_len = ft_strlen(g->map[i]);
+		if (g->map[i][g->map_x_len-- - 1] == '\n')
+			g->map[i][g->map_x_len] == '\0';
+		/*if (g->tmp_line == NULL && g->map_x_len != 0)
+			break;*/
+		if ((i != 0 && g->map_x_len != ft_strlen(g->map[i - 1]))
 			|| g->map_x_len < 3)
 			return (MAP_ERROR);
-		g->map[i++] = g->tmp_line;
-		g->map_y_len++;
 	}
 	parse_map(g);
 //	validate_winability(&g);
 	return (IN_PLAY);
+}
+
+int	get_number_of_lines(char *file_name)
+{
+	int		cnt;
+	int		fd;
+	char	*str;
+
+	cnt = 0;
+	fd = open(file_name, O_RDONLY);
+	while (1)
+	{
+		str = get_next_line(fd);
+		if (!str)
+			break;
+		cnt++;
+		free(str);
+	}
+	close(fd);
+	return (cnt);
 }

@@ -52,8 +52,8 @@ typedef struct s_game
 	void		*win_ptr;
 	char		**map;
 	char		*tmp_line;
-	int			map_x_len;
-	int			map_y_len;
+	long		map_x_len;
+	long		map_y_len;
 	t_counter	*cnt;
 	t_actor		*player;
 	t_actor		*foe;

@@ -46,4 +46,7 @@ enum e_state
 int		init_map(t_game *g, char *file_name);
 void	init_game(t_game *g, int argc, char **argv);
 
+// Utilities
+int	get_number_of_lines(char *file_name);
+
 #endif

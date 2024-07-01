@@ -34,7 +34,7 @@ void	init_game(t_game *g, int argc, char **argv)
 		ft_printf("ERROR: number of arguments or map name is incorrect\n");
 		return ;
 	}*/
-    file_name = ft_strjoin("", argv[1]);
+    file_name = ft_strjoin("./maps/", argv[1]);
 	ft_printf("%s\n", file_name);
 	g->state = init_map(g, file_name);
 	free(file_name);
@@ -49,6 +49,8 @@ int main(int argc, char **argv)
 {
 	t_game  g;
 	
+	ft_printf("%d\n", argc);
+	ft_printf("%s\n", argv[1]);
 	init_game(&g, argc, argv);
 /*	while(g.state == IN_PLAY)
 	{

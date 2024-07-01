@@ -12,6 +12,9 @@ all: minilibx/libmlx.a libft/libft.a $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
 
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 minilibx/libmlx.a: minilibx
 	$(MAKE) -C minilibx
 
