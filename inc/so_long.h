@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvoloshy <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 18:05:13 by mvoloshy          #+#    #+#             */
+/*   Updated: 2024/07/02 18:05:15 by mvoloshy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -13,11 +25,11 @@
 # include <time.h>		//bonus delay
 
 // Buttons listeners
-# define UP		119		//W key
-# define DOWN	115		//A key
-# define LEFT	97		//S key
-# define RIGHT	100		//D key
-# define ESC	65307	//ESC key
+# define BUT_UP		119		//W key
+# define BUT_DOWN	115		//A key
+# define BUT_LEFT	97		//S key
+# define BUT_RIGHT	100		//D key
+# define BUT_ESC	65307	//ESC key
 
 // Colours & Other Constants
 # define RED	"\033[1m\033[31m"
@@ -25,10 +37,6 @@
 # define ENDC	"\033[0m"
 # define WINDOW_NAME	"DOG PATRON GAME"
 # define SPRITE_SIZE	32
-# define GO_UP -1
-# define GO_DOWN 1
-# define GO_LEFT -1
-# define GO_RIGHT 1
 
 enum e_state
 {
@@ -46,7 +54,14 @@ enum e_state
 int		init_map(t_game *g, char *file_name);
 void	init_game(t_game *g, int argc, char **argv);
 
-// Utilities
-int	get_number_of_lines(char *file_name);
+// BFS & its Utils
+t_result	best_move_to_object(t_game *g, char obj, t_actor *actor);
+void	init_queue(t_queue *q);
+void	free_queue(t_queue *q);
+void	enqueue(t_queue *q, t_point pos);
+t_point	dequeue(t_queue *q);
+
+// Utils
+int		get_number_of_lines(char *file_name);
 
 #endif

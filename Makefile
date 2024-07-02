@@ -1,4 +1,7 @@
 SRC = 	src/main.c	\
+		src/utils.c	\
+		src/bfs.c	\
+		src/bfs_utils.c	\
 		src/init_game.c			
 OBJS = ${SRC:.c=.o}
 NAME = so_long
