@@ -105,4 +105,11 @@ typedef struct s_result
 	t_direction	best_move;
 }	t_result;
 
+typedef struct s_bfs_state
+{
+	bool		visited[10000][10000];
+	int			steps[10000][10000];
+	t_direction	directions[10000][10000];
+}	t_bfs_state;
+
 #endif

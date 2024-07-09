@@ -131,19 +131,11 @@ int	init_map(t_game *g, char *file_name)
 //	ft_printf("Foe y: %d\n", g->foe[0].pos.y);
 	ft_printf("PLayer x: %d\n", g->player[0].pos.x);
 	ft_printf("PLayer y: %d\n", g->player[0].pos.y);
+	t_result res = best_move_to_object(g, 'C', g->player);
+	ft_printf("Min distance to collectible: %d\n", res.min_steps);
+	ft_printf("target x: %d\n", res.target.x);
+	ft_printf("target y %d\n", res.target.y);
 //	*/
 //	validate_winability(&g);
-	t_result res = best_move_to_object(g, 'C', g->player);
-	ft_printf("Min distance to collectible: %d", res.min_steps);
-
-	if (res.best_move == MOVE_UP)
-		ft_printf("BEST MOVE: MOVE_UP");
-	else if (res.best_move == MOVE_DOWN)
-		ft_printf("BEST MOVE: MOVE_DOWN");
-	else if (res.best_move == MOVE_LEFT)
-		ft_printf("BEST MOVE: MOVE_LEFT");
-	else if (res.best_move == MOVE_RIGHT)
-		ft_printf("BEST MOVE: MOVE_RIGHT");
-
 	return (IN_PLAY);
 }
