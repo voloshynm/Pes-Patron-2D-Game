@@ -88,28 +88,30 @@ typedef struct s_queue
 }	t_queue;
 
 // move direction definition
-typedef enum e_direction
+typedef enum e_dir
 {
 	NONE,
 	MOVE_UP,
 	MOVE_DOWN,
 	MOVE_LEFT,
 	MOVE_RIGHT
-}	t_direction;
+}	t_dir;
 
 // best move data, towards the required object
 typedef struct s_result
 {
-	int			min_steps;
-	t_point		target;
-	t_direction	best_move;
+	int		min_steps;
+	t_point	target;
+	t_dir	best_move;
 }	t_result;
 
 typedef struct s_bfs_state
 {
-	bool		visited[10000][10000];
-	int			steps[10000][10000];
-	t_direction	directions[10000][10000];
+	bool	**visited;
+	int		**steps;
+	t_dir	**directions;
+	int		map_y_len;
+	int		map_x_len;
 }	t_bfs_state;
 
 #endif

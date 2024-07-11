@@ -38,73 +38,54 @@ collectible. Here's how the BFS implementation works:
 	number of steps needed to reach any collectible ('C') marked as visited.
 
 	To debug:
-	add after line 65:
-printf("Checking if (%d, %d) is valid: %d\n", y, x, result);
 	after line 85:
 printf("Visiting (%d, %d), Steps: %d\n", new.y, new.x, steps[new.y][new.x]);
-	after line 110
+	after line 101
 			ft_printf("steps %d\n", steps);
 			ft_printf("backtrace.x: %d\n", backtrace.x);
 			ft_printf("backtrace.y: %d\n", backtrace.y);
-			if (directions[backtrace.y][backtrace.x] == MOVE_UP)
+			if (state->directions[backtrace.y][backtrace.x] == MOVE_UP)
 				ft_printf("BT BEST MOVE: MOVE_UP\n");
-			else if (directions[backtrace.y][backtrace.x] == MOVE_DOWN)
+			else if (state->directions[backtrace.y][backtrace.x] == MOVE_DOWN)
 				ft_printf("BT BEST MOVE: MOVE_DOWN\n");
-			else if (directions[backtrace.y][backtrace.x] == MOVE_LEFT)
+			else if (state->directions[backtrace.y][backtrace.x] == MOVE_LEFT)
 				ft_printf("BT BEST MOVE: MOVE_LEFT\n");
-			else if (directions[backtrace.y][backtrace.x] == MOVE_RIGHT)
+			else if (state->directions[backtrace.y][backtrace.x] == MOVE_RIGHT)
 				ft_printf("BT BEST MOVE: MOVE_RIGHT\n");
-			else if (directions[backtrace.y][backtrace.x] == NONE)
+			else if (state->directions[backtrace.y][backtrace.x] == NONE)
 				ft_printf("BT BEST MOVE: NONE");
 
 */
 #include "../inc/so_long.h"
 
-static void	init_visited_array(t_game *g, t_bfs_state *state)
-{
-	int	y;
-	int	x;
-
-	y = -1;
-	while (++y < g->map_y_len)
-	{
-		x = -1;
-		while (++x < g->map_x_len)
-		{
-			state->visited[y][x] = false;
-			state->steps[y][x] = 0;
-		}
-	}
-}
-
-static void	bfs_process_neighbours(t_game *g, t_queue *q, t_point *current,
+static void	bfs_process_neighbours(t_game *g, t_queue *q, t_point *cur,
 			t_bfs_state *state)
 {
-	static int			d_x[] = {-1, 1, 0, 0};
-	static int			d_y[] = {0, 0, -1, 1};
-	static t_direction	dir[] = {MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN};
-	int					i;
-	t_point				new;
+	static int		d_x[] = {-1, 1, 0, 0};
+	static int		d_y[] = {0, 0, -1, 1};
+	static t_dir	dir[] = {MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN};
+	int				i;
+	t_point			new;
 
 	i = -1;
 	while (++i < 4)
 	{
-		new.x = current->x + d_x[i];
-		new.y = current->y + d_y[i];
+		new.x = cur->x + d_x[i];
+		new.y = cur->y + d_y[i];
 		if ((new.x >= 0 && new.x < g->map_x_len && new.y >= 0
-				&& new.y < g->map_y_len && (g->map[new.y][new.x] == '0'
-				|| g->map[new.y][new.x] == 'C' || g->map[new.y][new.x] == 'E'))
-				&& !state->visited[new.y][new.x])
+				&& new.y < g->map_y_len && !state->visited[new.y][new.x]
+				&& (g->map[new.y][new.x] == '0' || g->map[new.y][new.x] == 'P'
+				|| g->map[new.y][new.x] == 'C' || g->map[new.y][new.x] == 'E')))
 		{
 			state->visited[new.y][new.x] = true;
-			state->steps[new.y][new.x] = state->steps[current->y][current->x]++;
+			state->steps[new.y][new.x] = state->steps[cur->y][cur->x] + 1;
 			state->directions[new.y][new.x] = dir[i];
 			enqueue(q, new);
 		}
 	}
 }
 
-static void update_result(t_result *result, int steps, t_point target,
+static void	update_result(t_result *result, int steps, t_point target,
 				t_bfs_state *state)
 {
 	t_point	backtrace;
@@ -130,14 +111,18 @@ static void update_result(t_result *result, int steps, t_point target,
 	}
 }
 
-static t_result	calculate_best_move(t_game *g, t_bfs_state *state, 	char obj)
-{
-	static	t_result result = { .min_steps = -1,
-								.target = {-1, -1}, .best_move = NONE };
-	t_point	point;
-	int		i;
-	int		j;
 
+static t_result	calculate_best_move(t_game *g, t_bfs_state *state, char obj)
+{
+	t_point		point;
+	int			i;
+	int			j;
+	t_result	result;
+	
+	result.best_move = NONE;
+	result.target.x = -1;
+	result.target.y = -1;
+	result.min_steps = -1;
 	j = -1;
 	while (++j < g->map_y_len)
 	{
@@ -150,7 +135,6 @@ static t_result	calculate_best_move(t_game *g, t_bfs_state *state, 	char obj)
 				point.y = j;
 				update_result(&result, state->steps[j][i], point, state);
 			}
-			
 		}
 	}
 	return (result);
@@ -160,18 +144,22 @@ t_result	best_move_to_object(t_game *g, char obj, t_actor *actor)
 {
 	t_queue		q;
 	t_point		current;
-	static t_bfs_state	state = { .visited = {false}, .steps = {0},
-									.directions = {{NONE}} };
+	t_bfs_state	*state;
+	t_result	result;
 
-	init_queue(&q);
-	init_visited_array(g, &state);
+	q.front = NULL;
+	q.rear = NULL;
+	state = init_bfs_state(g->map_y_len, g->map_x_len);
 	enqueue(&q, actor->pos);
-	state.visited[actor->pos.y][actor->pos.x] = true;
+	state->visited[actor->pos.y][actor->pos.x] = true;
 	while (q.front != NULL)
 	{
 		current = dequeue(&q);
-		bfs_process_neighbours(g, &q, &current, &state);
+		bfs_process_neighbours(g, &q, &current, state);
 	}
-	free_queue(&q);
-	return (calculate_best_move(g, &state,	obj));
+	while (q.front != NULL)
+		dequeue(&q);
+	result = calculate_best_move(g, state, obj);
+	free_bfs_state(state);
+	return (result);
 }

@@ -10,6 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*	DEBUGGING, paste after line 151
+	t_result	res;
+	i = -1;
+	while (++i < g->map_y_len)
+		ft_printf("%s\n", g->map[i]);
+	ft_printf("It's players %d\n", g->cnt->players);
+	ft_printf("It's foes %d\n", g->cnt->foes);
+	ft_printf("It's exits %d\n", g->cnt->exits);
+	ft_printf("It's total_gems %d\n", g->cnt->total_gems);
+	ft_printf("It's taken_gems %d\n", g->cnt->taken_gems);
+	ft_printf("It's moves %d\n", g->cnt->moves);
+//	ft_printf("Foe x: %d\n", g->foe[0].pos.x);
+//	ft_printf("Foe y: %d\n", g->foe[0].pos.y);
+	ft_printf("PLayer x: %d\n", g->player[0].pos.x);
+	ft_printf("PLayer y: %d\n", g->player[0].pos.y);
+	res = best_move_to_object(g, 'P', &(g->foe[1]));
+	ft_printf("Min distance to collectible: %d\n", res.min_steps);
+	ft_printf("target x: %d\n", res.target.x);
+	ft_printf("target y %d\n", res.target.y);
+	if (res.best_move == MOVE_UP)
+		ft_printf("BT BEST MOVE: MOVE_UP\n");
+	else if (res.best_move == MOVE_DOWN)
+		ft_printf("BT BEST MOVE: MOVE_DOWN\n");
+	else if (res.best_move == MOVE_LEFT)
+		ft_printf("BT BEST MOVE: MOVE_LEFT\n");
+	else if (res.best_move == MOVE_RIGHT)
+		ft_printf("BT BEST MOVE: MOVE_RIGHT\n");
+	else if (res.best_move == NONE)
+		ft_printf("BT BEST MOVE: NONE\n");*/
+
 #include "../inc/so_long.h"
 
 static int	init_map_counters(t_game *g)
@@ -97,8 +127,8 @@ static int	parse_map(t_game *g)
 
 int	init_map(t_game *g, char *file_name)
 {
-	int		fd;
-	int		i;
+	int			fd;
+	int			i;
 
 	i = -1;
 	g->map_y_len = get_number_of_lines(file_name);
@@ -117,25 +147,7 @@ int	init_map(t_game *g, char *file_name)
 			return (MAP_ERROR);
 	}
 	g->state = parse_map(g);
-//	/*	
-	i = -1;
-	while (++i < g->map_y_len)
-		ft_printf("%s\n", g->map[i]);
-	ft_printf("It's players %d\n", g->cnt->players);
-	ft_printf("It's foes %d\n", g->cnt->foes);
-	ft_printf("It's exits %d\n", g->cnt->exits);
-	ft_printf("It's total_gems %d\n", g->cnt->total_gems);
-	ft_printf("It's taken_gems %d\n", g->cnt->taken_gems);
-	ft_printf("It's moves %d\n", g->cnt->moves);
-//	ft_printf("Foe x: %d\n", g->foe[0].pos.x);
-//	ft_printf("Foe y: %d\n", g->foe[0].pos.y);
-	ft_printf("PLayer x: %d\n", g->player[0].pos.x);
-	ft_printf("PLayer y: %d\n", g->player[0].pos.y);
-	t_result res = best_move_to_object(g, 'C', g->player);
-	ft_printf("Min distance to collectible: %d\n", res.min_steps);
-	ft_printf("target x: %d\n", res.target.x);
-	ft_printf("target y %d\n", res.target.y);
-//	*/
-//	validate_winability(&g);
+	if ((best_move_to_object(g, 'C', g->player)).min_steps == -1)
+		return (MAP_ERROR);
 	return (IN_PLAY);
 }

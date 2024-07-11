@@ -37,9 +37,9 @@ void	init_game(t_game *g, int argc, char **argv)
 	g->state = init_map(g, file_name);
 	free(file_name);
 	if (g->state == MAP_ERROR)
-		ft_printf("ERROR: selected map is invalid, game is not possible\n");
+		ft_printf("ERROR: selected map is invalid, the game is not possible\n");
 	if (g->state == ALLOC_ERROR)
-		ft_printf("ERROR: there's not enough memory, game is not possible\n");
+		ft_printf("ERROR: not enough memory, the game is not possible\n");
 }
 
 int	main(int argc, char **argv)

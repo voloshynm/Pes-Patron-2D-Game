@@ -51,17 +51,17 @@ enum e_state
 //Functions
 
 // Initializing the game
-int		init_map(t_game *g, char *file_name);
-void	init_game(t_game *g, int argc, char **argv);
+int			init_map(t_game *g, char *file_name);
+void		init_game(t_game *g, int argc, char **argv);
 
 // BFS & its Utils
 t_result	best_move_to_object(t_game *g, char obj, t_actor *actor);
-void	init_queue(t_queue *q);
-void	free_queue(t_queue *q);
-void	enqueue(t_queue *q, t_point pos);
-t_point	dequeue(t_queue *q);
+void		enqueue(t_queue *q, t_point pos);
+t_point		dequeue(t_queue *q);
+t_bfs_state	*init_bfs_state(int rows, int cols);
+void		free_bfs_state(t_bfs_state *state);
 
 // Utils
-int		get_number_of_lines(char *file_name);
+int			get_number_of_lines(char *file_name);
 
 #endif
