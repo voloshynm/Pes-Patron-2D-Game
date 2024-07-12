@@ -5,6 +5,8 @@
         "libft.h": "c",
         "ft_printf.h": "c",
         "mlx_int.h": "c",
-        "xshm.h": "c"
+        "xshm.h": "c",
+        "get_next_line.h": "c",
+        "time.h": "c"
     }
 }

@@ -25,7 +25,7 @@ typedef struct s_point
 typedef struct s_actor
 {
 	t_point	pos;
-	t_point	best_move;
+	t_point	next_move;
 }	t_actor;
 
 // To cnt items for map validation and gameplay 
@@ -39,17 +39,25 @@ typedef struct s_counter
 	int	moves;
 }	t_counter;
 
-// To parse sprite
+/*
+*	To parse sprite images
+*	in intance *player_idle[4][4]; the first element is face of the actor
+*	the second element is a sprite of an animation frame
+*/
 typedef struct s_texture
 {
-	void	*player_l[4];
-	void	*player_r[4];
-	void	*foe_l[4];
-	void	*foe_r[4];
-	void	*gem[4];
-	void	*exit[2];
-	void	*wall;
-	void	*floor;
+	void	*player_idle[4][2];
+	void	*player_walk[4][4];
+	void	*player_attack[4][4];
+	void	*player_death[4][4];
+	void	*foe_idle[4][4];
+	void	*foe_walk[4][10];
+	void	*foe_attack[4][8];
+	void	*foe_death[4][7];
+	void	*gem[12];
+	void	*exit[12];
+	void	*wall[26];
+	void	*floor[64];
 	int		*px_size;
 	int		*px_height;
 	int		*px_width;

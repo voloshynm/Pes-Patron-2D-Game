@@ -25,20 +25,20 @@
 //	ft_printf("Foe y: %d\n", g->foe[0].pos.y);
 	ft_printf("PLayer x: %d\n", g->player[0].pos.x);
 	ft_printf("PLayer y: %d\n", g->player[0].pos.y);
-	res = best_move_to_object(g, 'P', &(g->foe[1]));
+	res = best_move_to_object(g, 'C', &(g->player[0]));
 	ft_printf("Min distance to collectible: %d\n", res.min_steps);
 	ft_printf("target x: %d\n", res.target.x);
 	ft_printf("target y %d\n", res.target.y);
 	if (res.best_move == MOVE_UP)
-		ft_printf("BT BEST MOVE: MOVE_UP\n");
+		ft_printf("BEST MOVE: MOVE_UP\n");
 	else if (res.best_move == MOVE_DOWN)
-		ft_printf("BT BEST MOVE: MOVE_DOWN\n");
+		ft_printf("BEST MOVE: MOVE_DOWN\n");
 	else if (res.best_move == MOVE_LEFT)
-		ft_printf("BT BEST MOVE: MOVE_LEFT\n");
+		ft_printf("BEST MOVE: MOVE_LEFT\n");
 	else if (res.best_move == MOVE_RIGHT)
-		ft_printf("BT BEST MOVE: MOVE_RIGHT\n");
+		ft_printf("BEST MOVE: MOVE_RIGHT\n");
 	else if (res.best_move == NONE)
-		ft_printf("BT BEST MOVE: NONE\n");*/
+		ft_printf("BEST MOVE: NONE\n");*/
 
 #include "../inc/so_long.h"
 
@@ -147,7 +147,8 @@ int	init_map(t_game *g, char *file_name)
 			return (MAP_ERROR);
 	}
 	g->state = parse_map(g);
-	if ((best_move_to_object(g, 'C', g->player)).min_steps == -1)
+	if ((best_move_to_object(g, 'C', g->player)).min_steps == -1
+			|| (best_move_to_object(g, 'E', g->player)).min_steps == -1)
 		return (MAP_ERROR);
 	return (IN_PLAY);
 }

@@ -30,16 +30,16 @@ void	init_game(t_game *g, int argc, char **argv)
 	g->state = validate_file_name(argv[1]);
 	if (argc != 2 || (argc == 2 && g->state == ARG_ERROR))
 	{
-		ft_printf("ERROR: number of arguments or map name is incorrect\n");
+		ft_printf("Error\n: Number of arguments or map name is incorrect\n");
 		return ;
 	}
 	file_name = ft_strjoin("./maps/", argv[1]);
 	g->state = init_map(g, file_name);
 	free(file_name);
 	if (g->state == MAP_ERROR)
-		ft_printf("ERROR: selected map is invalid, the game is not possible\n");
+		ft_printf("Error\n: Chosen map is invalid, the game is not possible\n");
 	if (g->state == ALLOC_ERROR)
-		ft_printf("ERROR: not enough memory, the game is not possible\n");
+		ft_printf("Error\n: Not enough memory, the game is not possible\n");
 }
 
 int	main(int argc, char **argv)
