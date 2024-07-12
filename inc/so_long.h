@@ -13,29 +13,31 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "so_long_structs.h"
-# include "../libft/libft.h"
-# include "../libft/ft_printf.h"
-# include "../libft/get_next_line.h"
+# include "so_long_structs.h"		//structs for the program
+# include "../libft/libft.h"		//own libft library
+# include "../libft/ft_printf.h"	//custom printf
+# include "../libft/get_next_line.h"//custom get_next_line
+# include "../minilibx/mlx.h"		//mlx
+# include "../minilibx/mlx_int.h"	//mlx internal
 
-# include <fcntl.h>		//open, O_RDONLY
-# include <unistd.h>	//read, close, write
-# include <stdlib.h>	//malloc
-# include <stdbool.h>	//bool
-# include <time.h>		//bonus delay
+# include <fcntl.h>					//open, O_RDONLY
+# include <unistd.h>				//read, close, write
+# include <stdlib.h>				//malloc
+# include <stdbool.h>				//bool
+# include <time.h>					//bonus delay
 
 // Buttons listeners
-# define BUT_UP		119		//W key
-# define BUT_DOWN	115		//A key
-# define BUT_LEFT	97		//S key
-# define BUT_RIGHT	100		//D key
-# define BUT_ESC	65307	//ESC key
+# define BUT_UP		119				//W key
+# define BUT_DOWN	115				//A key
+# define BUT_LEFT	97				//S key
+# define BUT_RIGHT	100				//D key
+# define BUT_ESC	65307			//ESC key
 
 // Colours & Other Constants
 # define RED	"\033[1m\033[31m"
 # define GREEN	"\033[1m\033[32m"
 # define ENDC	"\033[0m"
-# define WINDOW_NAME	"DOG PATRON GAME"
+# define WINDOW_NAME	"WALKING DEAD GAME"
 # define SPRITE_SIZE	32
 
 enum e_state
@@ -45,6 +47,7 @@ enum e_state
 	ARG_ERROR = -2,
 	MAP_ERROR = -3,
 	ALLOC_ERROR = -4,
+	MLX_ERROR = -5,
 	IMAGE_INIT = 5
 };
 
