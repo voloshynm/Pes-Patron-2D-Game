@@ -48,7 +48,7 @@ enum e_state
 	MAP_ERROR = -3,
 	ALLOC_ERROR = -4,
 	MLX_ERROR = -5,
-	IMAGE_INIT = 5
+	SUCCESS = 2
 };
 
 //Functions
@@ -56,6 +56,9 @@ enum e_state
 // Initializing the game
 int			init_map(t_game *g, char *file_name);
 void		init_game(t_game *g, int argc, char **argv);
+void		init_mlx(t_game *g);
+void		load_textures(t_game *g);
+void		init_hooks(t_game *g);
 
 // BFS & its Utils
 t_result	best_move_to_object(t_game *g, char obj, t_actor *actor);
@@ -63,6 +66,20 @@ void		enqueue(t_queue *q, t_point pos);
 t_point		dequeue(t_queue *q);
 t_bfs_state	*init_bfs_state(int rows, int cols);
 void		free_bfs_state(t_bfs_state *state);
+
+//gameplay
+int			update_game(t_game *g);
+void		key_press(int keycode, t_game *g);
+void		move_foes(t_game *g);
+void		move_player(t_game *g, int keycode);
+
+//draw the game
+void		draw_game(t_game *g, int frame);
+void		draw_player(t_game *g, int f);
+void		draw_foes(t_game *g, int f);
+void		draw_tiles(t_game *g, int frame);
+void		draw_gems(t_game *g, int frame);
+void		draw_exit(t_game *g, int frame);
 
 // Utils
 int			get_number_of_lines(char *file_name);

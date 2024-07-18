@@ -1,8 +1,12 @@
-SRC = 	src/main.c	\
-		src/utils.c	\
-		src/bfs.c	\
-		src/bfs_utils.c	\
-		src/init_game.c			
+SRC = 	src/main.c					\
+		src/init/utils.c			\
+		src/init/init_game.c		\
+		src/init/init_mlx.c			\
+		src/init/load_textures.c	\
+		src/gameplay/bfs.c			\
+		src/gameplay/bfs_utils.c	\
+		src/gameplay/foe.c			\
+		src/gameplay/player.c
 OBJS = ${SRC:.c=.o}
 NAME = so_long
 

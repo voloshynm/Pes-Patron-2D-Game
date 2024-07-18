@@ -9,7 +9,7 @@
 /*   Updated: 2024/06/12 19:33:07 by mvoloshy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../inc/so_long.h"
+#include "../../inc/so_long.h"
 
 static int	validate_file_name(char *s)
 {
@@ -35,11 +35,16 @@ void	init_game(t_game *g, int argc, char **argv)
 	}
 	file_name = ft_strjoin("./maps/", argv[1]);
 	g->state = init_map(g, file_name);
+	init_mlx(g);
 	free(file_name);
 	if (g->state == MAP_ERROR)
 		ft_printf("Error\n: Chosen map is invalid, the game is not possible\n");
-	if (g->state == ALLOC_ERROR)
+	else if (g->state == ALLOC_ERROR)
 		ft_printf("Error\n: Not enough memory, the game is not possible\n");
+	else if (g->state == MLX_ERROR)
+		ft_printf("Error\n: MLX lib issue or there are missing textures\n");
+	else
+		init_hooks(g);
 }
 
 int	main(int argc, char **argv)
@@ -47,13 +52,7 @@ int	main(int argc, char **argv)
 	t_game	g;
 
 	init_game(&g, argc, argv);
-/*	while(g.state == IN_PLAY)
-	{
-		mlx_hook(g->mlx_ptr, KeyPress, KeyPressMask, &on_keypress, data);
-		mlx_hook(g->win_ptr, DestroyNotify, StructureNotifyMask,
-			&game_destroy, data);
-		mlx_loop_hook(g->mlx_ptr, &refresh, data);
-		mlx_loop(g->mlx_ptr);
-	}
-	free_g(&g);*/
+	while (g.state == IN_PLAY)
+		update_game(g);
+	free_game(&g);
 }
