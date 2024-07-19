@@ -41,10 +41,10 @@ static void	action_foe(t_game *g, t_actor *foe)
 
 static void	clean_old_position(t_game *g, t_actor *foe)
 {
-	if (foe->dir == MOVE_UP && is_accessible_foe(g, foe, 0, -1)
-		|| foe->dir == MOVE_DOWN && is_accessible_foe(g, foe, 0, 1)
-		|| foe->dir == MOVE_LEFT && is_accessible_foe(g, foe, -1, 0)
-		|| foe->dir == MOVE_RIGHT && is_accessible_foe(g, foe, 1, 0))
+	if ((foe->dir == MOVE_UP && is_accessible_foe(g, foe, 0, -1))
+		|| (foe->dir == MOVE_DOWN && is_accessible_foe(g, foe, 0, 1))
+		|| (foe->dir == MOVE_LEFT && is_accessible_foe(g, foe, -1, 0))
+		|| (foe->dir == MOVE_RIGHT && is_accessible_foe(g, foe, 1, 0)))
 		g->map[foe->pos.y][foe->pos.x] = '0';
 }
 

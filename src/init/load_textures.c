@@ -12,40 +12,43 @@
 
 #include "../../inc/so_long.h"
 
-static char	*actor_sprite_location(char *actor_n, char *act, char *j_s,
+static char	*actor_sprite_location(char *actor_name, char *act, char *j_s,
 									char *i_s)
 {
 	char	*result;
+	int		len;
 
-	result = (char *)malloc(ft_strlen("./sprites/") + ft_strlen(actor_n) + 1
-			+ ft_strlen(act) + 1 + ft_strlen(j_s) + 1 + ft_strlen(i_s) + 4 + 1);
+	len = 10 + ft_strlen(actor_name) + 1 + ft_strlen(act)
+			+ 1 + ft_strlen(j_s) + 1 + ft_strlen(i_s) + 4 + 1;
+	result = (char *)malloc(len);
 	if (!result)
 		return (NULL);
-	ft_strcpy(result, "./sprites/");
-	ft_strcat(result, actor_n);
-	ft_strcat(result, "/");
-	ft_strcat(result, act);
-	ft_strcat(result, "/");
-	ft_strcat(result, j_s);
-	ft_strcat(result, "/");
-	ft_strcat(result, i_s);
-	ft_strcat(result, ".xpm");
+	ft_strlcpy(result, "./sprites/", len);
+	ft_strlcat(result, actor_name, len);
+	ft_strlcat(result, "/", len);
+	ft_strlcat(result, act, len);
+	ft_strlcat(result, "/", len);
+	ft_strlcat(result, j_s, len);
+	ft_strlcat(result, "/", len);
+	ft_strlcat(result, i_s, len);
+	ft_strlcat(result, ".xpm", 4);
 	return (result);
 }
 
 static char	*item_sprite_location(char *item_name, char *i_s)
 {
 	char	*result;
+	int		len;
 
-	result = (char *)malloc(ft_strlen("./sprites/") + ft_strlen(item_name) + 1
-			+ ft_strlen(i_s) + 4 + 1);
+	len = 10 + ft_strlen(item_name) + 1	+ ft_strlen(i_s) + 4 + 1;
+	result = (char *)malloc(len);
 	if (!result)
 		return (NULL);
-	ft_strcpy(result, "./sprites/");
-	ft_strcat(result, item_name);
-	ft_strcat(result, "/");
-	ft_strcat(result, i_s);
-	ft_strcat(result, ".xpm");
+	ft_strlcpy(result, "./sprites/", len);
+	ft_strlcat(result, item_name, len);
+	ft_strlcat(result, "/", len);
+	ft_strlcat(result, i_s, len);
+	ft_strlcat(result, ".xpm", len);
 	return (result);
 }
 
@@ -68,7 +71,7 @@ static void	load_actor(t_game *g, void *actor[4][8], char *actor_n
 			i_s = ft_itoa(i);
 			file_path = actor_sprite_location(actor_n, action, j_s, i_s);
 			actor[j][i] = mlx_xpm_file_to_image(g->mlx_ptr, file_path,
-					SPRITE_SIZE, SPRITE_SIZE);
+					&g->sprite_size, &g->sprite_size);
 			if (!actor[j][i])
 				g->state = MLX_ERROR;
 			if (file_path)
@@ -79,7 +82,7 @@ static void	load_actor(t_game *g, void *actor[4][8], char *actor_n
 	}
 }
 
-static void	load_item(t_game *g, void **item_array, char *item_name, int size)
+static void	load_item(t_game *g, void *item_array[64], char *item_name, int size)
 {
 	int		i;
 	char	*file_path;
@@ -93,9 +96,12 @@ static void	load_item(t_game *g, void **item_array, char *item_name, int size)
 		if (file_path != NULL)
 		{
 			item_array[i] = mlx_xpm_file_to_image(g->mlx_ptr, file_path,
-					SPRITE_SIZE, SPRITE_SIZE);
-			if (!item_array[i])
+					&g->sprite_size, &g->sprite_size);
+			if (item_array[i] == NULL)
+			{
+				ft_printf("Error: mlx_xpm_file_to_%d image failed for file %s\n", i, file_path);
 				g->state = MLX_ERROR;
+			}
 			free(file_path);
 		}
 		free(i_s);

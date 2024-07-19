@@ -41,17 +41,33 @@ void	draw_foes(t_game *g, int f)
 	}
 }
 
-void	draw_tiles(t_game *g, int frame)
+void	draw_wall(t_game *g, int x, int y)
 {
+	int	pseudo_rand;
 
+	mlx_put_image_to_window(g->mlx_ptr, g->win_ptr, g->texture->wall[0], x, y);
+	pseudo_rand = (x * y * 2438747) % 26;
+	if (pseudo_rand == 0)
+		pseudo_rand = 1;
+	mlx_put_image_to_window(g->mlx_ptr, g->win_ptr,
+		g->texture->wall[pseudo_rand], x, y);
 }
 
-void	draw_gems(t_game *g, int frame)
+void	draw_floor(t_game *g, int x, int y)
 {
+	int	pseudo_rand;
 
+	pseudo_rand = (x * y * 2438747) % 64;
+	mlx_put_image_to_window(g->mlx_ptr, g->win_ptr,
+		g->texture->floor[pseudo_rand], x, y);
 }
 
-void	draw_exit(t_game *g, int frame)
+void	draw_gems(t_game *g, int f, int x, int y)
 {
+	mlx_put_image_to_window(g->mlx_ptr, g->win_ptr, g->texture->gem[f], x, y);
+}
 
+void	draw_exit(t_game *g, int f, int x, int y)
+{
+	mlx_put_image_to_window(g->mlx_ptr, g->win_ptr, g->texture->exit[f], x, y);
 }

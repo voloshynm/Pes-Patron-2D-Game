@@ -9,50 +9,48 @@
 /*   Updated: 2024/06/12 19:33:07 by mvoloshy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../inc/so_long.h"
-
-static int	validate_file_name(char *s)
-{
-	int		len;
-
-	len = ft_strlen(s);
-	if (len < 4)
-		return (ARG_ERROR);
-	if (ft_strncmp(s + len - 4, ".ber", 4) != 0)
-		return (ARG_ERROR);
-	return (IN_PLAY);
-}
-
-void	init_game(t_game *g, int argc, char **argv)
-{
-	char	*file_name;
-
-	g->state = validate_file_name(argv[1]);
-	if (argc != 2 || (argc == 2 && g->state == ARG_ERROR))
-	{
-		ft_printf("Error\n: Number of arguments or map name is incorrect\n");
-		return ;
-	}
-	file_name = ft_strjoin("./maps/", argv[1]);
-	g->state = init_map(g, file_name);
-	init_mlx(g);
-	free(file_name);
-	if (g->state == MAP_ERROR)
-		ft_printf("Error\n: Chosen map is invalid, the game is not possible\n");
-	else if (g->state == ALLOC_ERROR)
-		ft_printf("Error\n: Not enough memory, the game is not possible\n");
-	else if (g->state == MLX_ERROR)
-		ft_printf("Error\n: MLX lib issue or there are missing textures\n");
-	else
-		init_hooks(g);
-}
+#include "../inc/so_long.h"
 
 int	main(int argc, char **argv)
 {
 	t_game	g;
 
+	g.game_name = WINDOW_NAME;
+	g.sprite_size = SPRITE_SIZE;
 	init_game(&g, argc, argv);
 	while (g.state == IN_PLAY)
-		update_game(g);
+		update_game(&g);
+	game_over(&g);
 	free_game(&g);
+/*	(void) argc;
+	(void) argv;
+
+    char cwd[1024];
+    void *mlx_ptr;
+    void *img;
+    int sprite_size = 32;
+
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        printf("Current working directory: %s\n", cwd);
+    } else {
+        perror("getcwd() error");
+        return 1;
+    }
+
+    mlx_ptr = mlx_init();
+    if (mlx_ptr == NULL) {
+        fprintf(stderr, "Error: mlx_init failed.\n");
+        return 1;
+    }
+
+    printf("Trying to load image from: %s\n", "2.xpm");
+    img = mlx_xpm_file_to_image(mlx_ptr, "2.xpm", &sprite_size, &sprite_size);
+    if (img == NULL) {
+        fprintf(stderr, "Error: mlx_xpm_file_to_image failed.\n");
+        return 1;
+    }
+
+    printf("Image loaded successfully.\n");
+    return 0;
+*/
 }

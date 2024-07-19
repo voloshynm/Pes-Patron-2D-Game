@@ -24,6 +24,7 @@ static bool	is_accessible_player(t_game *g, int x_off, int y_off)
 
 static void	action_player(t_game *g)
 {
+	g->cnt->moves += 1;
 	g->player->action = 0;
 	if (g->map[g->player->pos.y][g->player->pos.x] == 'F')
 	{
@@ -44,36 +45,43 @@ static void	action_player(t_game *g)
 	else
 		g->player->action = 1;
 	g->map[g->player->pos.y][g->player->pos.x] = 'P';
-	draw_game(g);
+	update_game(g);
 }
 
-void	move_player(t_game *g, int keycode)
+void	move_player_vertically(t_game *g, int keycode)
 {
 	if (keycode == BUT_UP && is_accessible_player(g, 0, -1))
 	{
 		g->map[g->player->pos.y][g->player->pos.x] = '0';
 		g->player->dir = MOVE_UP;
 		g->player->pos.y -= 1;
+		action_player(g);
 	}
 	else if (keycode == BUT_DOWN && is_accessible_player(g, 0, 1))
 	{
 		g->map[g->player->pos.y][g->player->pos.x] = '0';
 		g->player->dir = MOVE_DOWN;
 		g->player->pos.y += 1;
+		action_player(g);
 	}
-	else if (keycode == BUT_LEFT && is_accessible_player(g, -1, 0))
+}
+
+void	move_player_horizontally(t_game *g, int keycode)
+{
+	if (keycode == BUT_LEFT && is_accessible_player(g, -1, 0))
 	{
 		g->map[g->player->pos.y][g->player->pos.x] = '0';
 		g->player->dir = MOVE_LEFT;
 		g->player->pos.x -= 1;
+		action_player(g);
 	}
 	else if (keycode == BUT_RIGHT && is_accessible_player(g, 1, 0))
 	{
 		g->map[g->player->pos.y][g->player->pos.x] = '0';
 		g->player->dir = MOVE_RIGHT;
 		g->player->pos.x += 1;
+		action_player(g);
 	}
-	action_player(g);
 }
 
 void	draw_player(t_game *g, int f)

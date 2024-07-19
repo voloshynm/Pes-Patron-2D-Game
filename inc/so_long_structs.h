@@ -79,7 +79,7 @@ typedef struct s_texture
 	void	*foe_dead[4][8];
 	void	*gem[8];
 	void	*exit[8];
-	void	*wall[26];
+	void	*wall[64];
 	void	*floor[64];
 /*	int		px_size;
 	int		px_height;
@@ -93,6 +93,8 @@ typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	char		*game_name;
+	int			sprite_size;
 	char		**map;
 	char		*tmp_line;
 	int			x_s;

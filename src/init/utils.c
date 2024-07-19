@@ -31,3 +31,29 @@ int	get_number_of_lines(char *file_name)
 	close(fd);
 	return (cnt);
 }
+
+int	init_map_counters(t_game *g)
+{
+	g->cnt = ft_calloc(1, sizeof(t_counter));
+	if (g->cnt == 0)
+		return (ALLOC_ERROR);
+	g->cnt->players = 0;
+	g->cnt->foes = 0;
+	g->cnt->exits = 0;
+	g->cnt->total_gems = 0;
+	g->cnt->taken_gems = 0;
+	g->cnt->moves = 0;
+	return (IN_PLAY);
+}
+
+int	validate_file_name(char *s)
+{
+	int		len;
+
+	len = ft_strlen(s);
+	if (len < 4)
+		return (ARG_ERROR);
+	if (ft_strncmp(s + len - 4, ".ber", 4) != 0)
+		return (ARG_ERROR);
+	return (IN_PLAY);
+}

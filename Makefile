@@ -3,14 +3,17 @@ SRC = 	src/main.c					\
 		src/init/init_game.c		\
 		src/init/init_mlx.c			\
 		src/init/load_textures.c	\
+		src/init/free_game.c		\
+		src/gameplay/gameplay.c		\
 		src/gameplay/bfs.c			\
 		src/gameplay/bfs_utils.c	\
+		src/gameplay/draw_game.c	\
 		src/gameplay/foe.c			\
 		src/gameplay/player.c
 OBJS = ${SRC:.c=.o}
 NAME = so_long
 
-CC = cc
+CC = cc -g
 CFLAGS = -Wall -Wextra -Werror -I./minilibx -I./libft -I./inc
 LDFLAGS = -L./minilibx -lmlx -L./libft -lft -lm -lXext -lX11
 

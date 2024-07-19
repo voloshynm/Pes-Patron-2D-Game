@@ -42,20 +42,6 @@
 
 #include "../inc/so_long.h"
 
-static int	init_map_counters(t_game *g)
-{
-	g->cnt = ft_calloc(1, sizeof(t_counter));
-	if (g->cnt == 0)
-		return (ALLOC_ERROR);
-	g->cnt->players = 0;
-	g->cnt->foes = 0;
-	g->cnt->exits = 0;
-	g->cnt->total_gems = 0;
-	g->cnt->taken_gems = 0;
-	g->cnt->moves = 0;
-	return (IN_PLAY);
-}
-
 static int	init_foes(t_game *g, int i, int j)
 {
 	t_actor	*new_foe;
@@ -99,7 +85,7 @@ static int	parse_map_counters(t_game *g, char c, int i, int j)
 		return (MAP_ERROR);
 }
 
-static int	parse_map(t_game *g)
+int	parse_map(t_game *g)
 {
 	int	i;
 	int	j;
@@ -150,4 +136,28 @@ int	init_map(t_game *g, char *file_name)
 		|| (best_move_to_object(g, 'E', g->player)).min_steps == -1)
 		return (MAP_ERROR);
 	return (IN_PLAY);
+}
+
+void	init_game(t_game *g, int argc, char **argv)
+{
+	char	*file_name;
+
+	g->state = validate_file_name(argv[1]);
+	if (argc != 2 || (argc == 2 && g->state == ARG_ERROR))
+	{
+		ft_printf("Error\n: Number of arguments or map name is incorrect\n");
+		return ;
+	}
+	file_name = ft_strjoin("./maps/", argv[1]);
+	g->state = init_map(g, file_name);
+	free(file_name);
+	init_mlx(g);
+	if (g->state == MAP_ERROR)
+		ft_printf("Error\n: Chosen map is invalid, the game is not possible\n");
+	else if (g->state == ALLOC_ERROR)
+		ft_printf("Error\n: Not enough memory, the game is not possible\n");
+	else if (g->state == MLX_ERROR)
+		ft_printf("Error\n: MLX lib issue or there are missing textures\n");
+	else
+		init_hooks(g);
 }

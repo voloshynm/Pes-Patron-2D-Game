@@ -34,9 +34,9 @@
 # define BUT_ESC	65307			//ESC key
 
 // Colours & Other Constants
-# define RED	"\033[1m\033[31m"
-# define GREEN	"\033[1m\033[32m"
-# define ENDC	"\033[0m"
+# define RED			"\033[1m\033[31m"
+# define GREEN			"\033[1m\033[32m"
+# define ENDC			"\033[0m"
 # define WINDOW_NAME	"WALKING DEAD GAME"
 # define SPRITE_SIZE	32
 
@@ -53,12 +53,26 @@ enum e_state
 
 //Functions
 
-// Initializing the game
-int			init_map(t_game *g, char *file_name);
+// Initializing the game, MLX & utils
 void		init_game(t_game *g, int argc, char **argv);
+int			init_map(t_game *g, char *file_name);
+int			parse_map(t_game *g);
+int			init_map_counters(t_game *g);
+int			get_number_of_lines(char *file_name);
+int			validate_file_name(char *s);
 void		init_mlx(t_game *g);
-void		load_textures(t_game *g);
 void		init_hooks(t_game *g);
+void		load_textures(t_game *g);
+void		free_game(t_game *g);
+
+// Gameplay
+int			update_game(t_game *g);
+void		draw_game(t_game *g, int animation_frame);
+int			key_press(int keycode, t_game *g);
+void		game_over(t_game *g);
+void		move_foes(t_game *g);
+void		move_player_horizontally(t_game *g, int keycode);
+void		move_player_vertically(t_game *g, int keycode);
 
 // BFS & its Utils
 t_result	best_move_to_object(t_game *g, char obj, t_actor *actor);
@@ -67,21 +81,13 @@ t_point		dequeue(t_queue *q);
 t_bfs_state	*init_bfs_state(int rows, int cols);
 void		free_bfs_state(t_bfs_state *state);
 
-//gameplay
-int			update_game(t_game *g);
-void		key_press(int keycode, t_game *g);
-void		move_foes(t_game *g);
-void		move_player(t_game *g, int keycode);
-
-//draw the game
-void		draw_game(t_game *g, int frame);
+// Draw textures
+void		draw_game(t_game *g, int animation_frame);
 void		draw_player(t_game *g, int f);
 void		draw_foes(t_game *g, int f);
-void		draw_tiles(t_game *g, int frame);
-void		draw_gems(t_game *g, int frame);
-void		draw_exit(t_game *g, int frame);
-
-// Utils
-int			get_number_of_lines(char *file_name);
+void		draw_wall(t_game *g, int x, int y);
+void		draw_floor(t_game *g, int x, int y);
+void		draw_gems(t_game *g, int f, int x, int y);
+void		draw_exit(t_game *g, int f, int x, int y);
 
 #endif
