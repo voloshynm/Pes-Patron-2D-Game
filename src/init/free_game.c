@@ -72,35 +72,51 @@ void	free_map(t_game *g)
 {
 	int	i;
 
+	if (g->cnt->players > 0)
+	{
+		free(g->player);
+		g->player = NULL;
+	}
+	if (g->cnt->foes > 0)
+	{
+		free(g->foe);
+		g->foe = NULL;
+	}
+	if (g->cnt)
+	{
+		free(g->cnt);
+		g->cnt = NULL;
+	}
 	i = -1;
 	if (g->map)
 	{
-		while (g->map[++i] != NULL)
-			free(g->map[i]);
+		while (++i < g->y_s)
+			if (g->map[i])
+				free(g->map[i]);
 		free(g->map);
+		g->map = NULL;
 	}
-	if (g->tmp_line)
-		free(g->tmp_line);
-	if (g->player)
-		free(g->player);
-	if (g->foe)
-		free(g->foe);
-	if (g->cnt)
-		free(g->cnt);
 }
 
 void	free_game(t_game *g)
 {
+	if (!g)
+		return;
 	free_map(g);
 	if (g->texture)
 	{
 		free_textures(g, g->texture);
 		free(g->texture);
+		g->texture = NULL;
 	}
 	if (g->win_ptr)
+	{
 		mlx_destroy_window(g->mlx_ptr, g->win_ptr);
+		g->win_ptr = NULL;
+	}
 	if (g->mlx_ptr)
+	{
+		mlx_loop_end(g->mlx_ptr);
 		mlx_destroy_display(g->mlx_ptr);
-	if (g->mlx_ptr)
-		free(g->mlx_ptr);
+	}
 }

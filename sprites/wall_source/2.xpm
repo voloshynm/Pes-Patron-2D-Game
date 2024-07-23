@@ -1,0 +1,26 @@
+/* XPM */
+static char * image[] = {
+/* width height num_colors chars_per_pixel */
+"17 16 5 1",
+"a c #d07753",
+"b c #0c0f2a",
+"c c #ffffff",
+"d c #b55945",
+"e c #734c44",
+"cccccccbbbbbccccc",
+"bbbbbbbaadaabcccc",
+"beaadaadaadaabccc",
+"beeaadaadaadaabcc",
+"beeeaadaadaadaabc",
+"beeeeaadaadddeddb",
+"beeeeddeddeddeddb",
+"beeeeddeddeddeddb",
+"beeeeddeddeddeddb",
+"beeeeddedddddeddb",
+"beeeeddeddeddeddb",
+"ceeeedddddeddeddb",
+"cceeedddddeddeddb",
+"ccceeddeddeddeddb",
+"cccceddeddeddeddb",
+"cccccddeddecccccc",
+};

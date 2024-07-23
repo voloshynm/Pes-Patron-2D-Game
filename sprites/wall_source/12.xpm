@@ -1,0 +1,25 @@
+/* XPM */
+static char * image[] = {
+/* width height num_colors chars_per_pixel */
+"45 14 6 1",
+"a c #d07753",
+"b c #0c0f2a",
+"c c #3d3333",
+"d c #ffffff",
+"e c #b55945",
+"f c #734c44",
+"ddddddddddddbbbdddddddddddddddddddddddddddddd",
+"ddddddddddddbeebdddddddddddddbbbbbbbbbbbbbddd",
+"ddddddddddddbeeebbbbbbbbbbbbbfffffffffffffbdd",
+"ddbbbbbbbbbbbbeeeffffffffffffeeeeeeeeeeeeeebd",
+"dbfffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeb",
+"baaeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeb",
+"bacaeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeb",
+"becaeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeb",
+"becaeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefb",
+"becaeeeeeeeeeeeeeeeeeeeeeeeeeffffffeeecfffffd",
+"bfceeeeeeeeeeeeeffffffffffffffffffffeeecfffdd",
+"bfceffffffffffffffffffffffffffffffffceefcfddd",
+"dfcefffffffffffffffffffffffffddddddddfffddddd",
+"ddefffffffffffffddddddddddddddddddddddddddddd",
+};

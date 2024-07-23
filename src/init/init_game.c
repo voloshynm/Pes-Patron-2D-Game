@@ -53,10 +53,15 @@ static int	init_foes(t_game *g, int i, int j)
 		return (ALLOC_ERROR);
 	while (++k < g->cnt->foes)
 		new_foe[k] = g->foe[k];
-	g->cnt->foes++;
-	new_foe[g->cnt->foes - 1].pos.x = i;
-	new_foe[g->cnt->foes - 1].pos.y = j;
+	new_foe[g->cnt->foes].pos.x = i;
+	new_foe[g->cnt->foes].pos.y = j;
+	new_foe[g->cnt->foes].dir = NONE;
+	new_foe[g->cnt->foes].d = -1;
+	new_foe[g->cnt->foes].action = -1;
+	if (g->cnt->foes > 0)
+		free(g->foe);
 	g->foe = new_foe;
+	g->cnt->foes++;
 	return (IN_PLAY);
 }
 
@@ -76,6 +81,9 @@ static int	parse_map_counters(t_game *g, char c, int i, int j)
 			return (ALLOC_ERROR);
 		g->player->pos.x = i;
 		g->player->pos.y = j;
+		g->player->dir = NONE;
+		g->player->d = -1;
+		g->player->action = -1;
 	}
 	else if (c == 'F')
 		return (init_foes(g, i, j));
@@ -104,7 +112,7 @@ int	parse_map(t_game *g)
 				|| g->state == MAP_ERROR || g->state == ALLOC_ERROR)
 				return (g->state);
 		}
-		i = 0;
+		i = -1;
 	}
 	if (g->cnt->players != 1 || g->cnt->exits != 1 || g->cnt->total_gems == 0)
 		return (MAP_ERROR);
@@ -146,6 +154,12 @@ void	init_game(t_game *g, int argc, char **argv)
 	if (argc != 2 || (argc == 2 && g->state == ARG_ERROR))
 	{
 		ft_printf("Error\n: Number of arguments or map name is incorrect\n");
+		return ;
+	}
+	g->texture = (t_texture *)malloc(sizeof(t_texture));
+	if (!g->texture)
+	{
+		g->state = ALLOC_ERROR;
 		return ;
 	}
 	file_name = ft_strjoin("./maps/", argv[1]);

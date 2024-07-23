@@ -50,10 +50,31 @@ int	validate_file_name(char *s)
 {
 	int		len;
 
+	if (s == NULL)
+		return (ARG_ERROR);
 	len = ft_strlen(s);
-	if (len < 4)
+	if (len < 4 || ft_strncmp(s + len - 4, ".ber", 4) != 0)
 		return (ARG_ERROR);
-	if (ft_strncmp(s + len - 4, ".ber", 4) != 0)
-		return (ARG_ERROR);
+	return (IN_PLAY);
+}
+
+int	print_map(t_game *g)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	ft_printf ("\n");
+	while (++j < g->y_s)
+	{
+		while (++i < g->x_s)
+		{
+			ft_printf ("%c", g->map[j][i]);
+		}
+		ft_printf ("\n");
+		i = -1;
+	}
+	ft_printf ("\n");
 	return (IN_PLAY);
 }

@@ -73,9 +73,8 @@ static void	bfs_process_neighbours(t_game *g, t_queue *q, t_point *cur,
 		new.x = cur->x + d_x[i];
 		new.y = cur->y + d_y[i];
 		if ((new.x >= 0 && new.x < g->x_s && new.y >= 0
-				&& new.y < g->y_s && !state->visited[new.y][new.x]
-			&& (g->map[new.y][new.x] == '0' || g->map[new.y][new.x] == 'P'
-			|| g->map[new.y][new.x] == 'C' || g->map[new.y][new.x] == 'E')))
+				&& new.y < g->y_s && !state->visited[new.y][new.x])
+			&& (g->map[new.y][new.x] != '1'))
 		{
 			state->visited[new.y][new.x] = true;
 			state->steps[new.y][new.x] = state->steps[cur->y][cur->x] + 1;

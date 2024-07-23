@@ -1,0 +1,14 @@
+/* XPM */
+static char * image[] = {
+/* width height num_colors chars_per_pixel */
+"8 7 2 1",
+"a c #eb9661",
+"b c #ffffff",
+"baabbbbb",
+"aaabbaaa",
+"aaaabaaa",
+"aaaabaaa",
+"baaabbbb",
+"baabaabb",
+"bbbbaabb",
+};

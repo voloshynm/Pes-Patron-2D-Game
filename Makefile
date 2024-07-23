@@ -1,16 +1,18 @@
-SRC = 	src/main.c					\
-		src/init/utils.c			\
-		src/init/init_game.c		\
-		src/init/init_mlx.c			\
-		src/init/load_textures.c	\
-		src/init/free_game.c		\
-		src/gameplay/gameplay.c		\
-		src/gameplay/bfs.c			\
-		src/gameplay/bfs_utils.c	\
-		src/gameplay/draw_game.c	\
-		src/gameplay/foe.c			\
-		src/gameplay/player.c
-OBJS = ${SRC:.c=.o}
+SRC =   src/main.c                 \
+        src/init/utils.c           \
+        src/init/init_game.c       \
+        src/init/init_mlx.c        \
+        src/init/load_textures.c   \
+        src/init/free_game.c       \
+        src/gameplay/gameplay.c    \
+        src/gameplay/bfs.c         \
+        src/gameplay/bfs_utils.c   \
+        src/gameplay/draw_game.c   \
+        src/gameplay/foe.c         \
+        src/gameplay/player.c
+
+OBJDIR = objects
+OBJS = $(SRC:src/%.c=$(OBJDIR)/%.o)
 NAME = so_long
 
 CC = cc -g
@@ -22,7 +24,8 @@ all: minilibx/libmlx.a libft/libft.a $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
 
-%.o: %.c
+$(OBJDIR)/%.o: src/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 minilibx/libmlx.a: minilibx
@@ -46,7 +49,7 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	$(MAKE) -C libft fclean
-	rm -rf minilibx minilibx-linux.tgz libft
+	rm -rf minilibx minilibx-linux.tgz libft $(OBJDIR)
 
 re: fclean all
 

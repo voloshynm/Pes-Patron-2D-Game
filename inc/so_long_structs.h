@@ -77,8 +77,8 @@ typedef struct s_texture
 	void	*foe_walk[4][8];
 	void	*foe_hits[4][8];
 	void	*foe_dead[4][8];
-	void	*gem[8];
-	void	*exit[8];
+	void	*gem[64];
+	void	*exit[64];
 	void	*wall[64];
 	void	*floor[64];
 /*	int		px_size;
