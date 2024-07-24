@@ -24,7 +24,6 @@ static bool	is_accessible_player(t_game *g, int x_off, int y_off)
 
 static void	action_player(t_game *g)
 {
-	ft_printf("Steps made: %d\n", g->cnt->moves);
 	g->player->action = 0;
 	if (g->map[g->player->pos.y][g->player->pos.x] == 'F')
 	{

@@ -14,9 +14,17 @@
 
 void	draw_game(t_game *g, int animation_frame)
 {
-	animation_frame = 0;
+	char	*display_moves;
+	char	*cnt_moves_txt;
+
 	draw_map(g, animation_frame);
+	draw_foes(g, animation_frame);
 	draw_player(g, animation_frame);
+	cnt_moves_txt = ft_itoa(g->cnt->moves);
+	display_moves = ft_strjoin("Moves taken: ", cnt_moves_txt);
+	mlx_string_put(g->mlx_ptr, g->win_ptr, 10, 10, 0xFFFFFF, display_moves);
+	free(cnt_moves_txt);
+	free(display_moves);
 }
 
 void	draw_map(t_game *g, int animation_frame)

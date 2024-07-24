@@ -68,22 +68,10 @@ static void	free_textures(t_game *g, t_texture *texture)
 	}
 }
 
-void	free_map(t_game *g)
+void	free_plot(t_game *g)
 {
 	int	i;
 
-	if (g->cnt->players > 0)
-	{
-		free(g->player);
-		g->player = NULL;
-	}
-	if (g->cnt->foes > 0)
-	{
-		free(g->foe);
-		g->foe = NULL;
-	}
-	if (g->cnt)
-		free(g->cnt);
 	i = -1;
 	if (g->map)
 	{
@@ -93,6 +81,25 @@ void	free_map(t_game *g)
 		free(g->map);
 		g->map = NULL;
 	}
+}
+
+void	free_map(t_game *g)
+{
+	if (g->cnt)
+	{
+		if (g->cnt->players > 0)
+		{
+			free(g->player);
+			g->player = NULL;
+		}
+		if (g->cnt->foes > 0)
+		{
+			free(g->foe);
+			g->foe = NULL;
+		}
+		free(g->cnt);
+	}
+	free_plot(g);
 }
 
 void	free_game(t_game *g)

@@ -55,18 +55,27 @@ enum e_state
 
 //Functions
 
-// Initializing the game, MLX & utils
+// Initializing the game & its utils
 void		init_game(t_game *g, int argc, char **argv);
 int			init_map(t_game *g, char *file_name);
 int			parse_map(t_game *g);
-int			init_map_counters(t_game *g);
 int			get_number_of_lines(char *file_name);
-char		*check_args(t_game *g, int argc, char **argv);
+int			print_map(t_game *g);
+int			validate_file_name(char *s);
+int			file_exists(const char *filename);
+
+// Initializing MLX
 void		init_mlx(t_game *g);
 void		init_hooks(t_game *g);
 void		load_textures(t_game *g);
-void		free_game(t_game *g);
-//int			print_map(t_game *g);
+
+// Draw textures
+void		draw_game(t_game *g, int animation_frame);
+void		draw_map(t_game *g, int animation_frame);
+void		draw_tile(t_game *g, void *item_array[64], t_point *pos);
+void		draw_gem(t_game *g, void *item_array[64], int f, t_point *pos);
+void		draw_player(t_game *g, int f);
+void		draw_foes(t_game *g, int f);
 
 // Gameplay
 int			update_game(t_game *g);
@@ -83,12 +92,9 @@ t_point		dequeue(t_queue *q);
 t_bfs_state	*init_bfs_state(int rows, int cols);
 void		free_bfs_state(t_bfs_state *state);
 
-// Draw textures
-void		draw_game(t_game *g, int animation_frame);
-void		draw_map(t_game *g, int animation_frame);
-void		draw_tile(t_game *g, void *item_array[64], t_point *pos);
-void		draw_gem(t_game *g, void *item_array[64], int f, t_point *pos);
-void		draw_player(t_game *g, int f);
-void		draw_foes(t_game *g, int f);
+// Freeing the elements and the game
+void		free_game(t_game *g);
+void		free_plot(t_game *g);
+void		free_map(t_game *g);
 
 #endif
