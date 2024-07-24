@@ -7,6 +7,7 @@ SRC =   src/main.c                 \
         src/gameplay/gameplay.c    \
         src/gameplay/bfs.c         \
         src/gameplay/bfs_utils.c   \
+		src/gameplay/draw_actors.c \
         src/gameplay/draw_game.c   \
         src/gameplay/foe.c         \
         src/gameplay/player.c

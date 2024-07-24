@@ -31,14 +31,13 @@ static void	action_foe(t_game *g, t_actor *foe)
 		g->state = GAME_OVER;
 	}
 	else if ((foe->pos.x - g->player->pos.x < 2 && foe->pos.x - g->player->pos.x
-			> -2) || (foe->pos.y - g->player->pos.y < 2 && foe->pos.y
+			> -2) && (foe->pos.y - g->player->pos.y < 2 && foe->pos.y
 			- g->player->pos.y > -2))
 		foe->action = 2;
 	else
 		foe->action = 1;
 	if (g->map[foe->pos.y][foe->pos.x] == '0')
 		g->map[foe->pos.y][foe->pos.x] = 'F';
-//	print_map(g);
 }
 
 static void	clean_old_position(t_game *g, t_actor *foe)

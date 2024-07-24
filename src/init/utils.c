@@ -11,7 +11,28 @@
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
+/* Debugging function:
+int	print_map(t_game *g)
+{
+	int	i;
+	int	j;
 
+	i = -1;
+	j = -1;
+	ft_printf ("\n");
+	while (++j < g->y_s)
+	{
+		while (++i < g->x_s)
+		{
+			ft_printf ("%c", g->map[j][i]);
+		}
+		ft_printf ("\n");
+		i = -1;
+	}
+	ft_printf ("\n");
+	return (IN_PLAY);
+}
+*/
 int	get_number_of_lines(char *file_name)
 {
 	int		cnt;
@@ -20,6 +41,8 @@ int	get_number_of_lines(char *file_name)
 
 	cnt = 0;
 	fd = open(file_name, O_RDONLY);
+	if (fd == -1)
+		return (ARG_ERROR);
 	while (1)
 	{
 		str = get_next_line(fd);
@@ -46,7 +69,7 @@ int	init_map_counters(t_game *g)
 	return (IN_PLAY);
 }
 
-int	validate_file_name(char *s)
+static int	validate_file_name(char *s)
 {
 	int		len;
 
@@ -58,23 +81,40 @@ int	validate_file_name(char *s)
 	return (IN_PLAY);
 }
 
-int	print_map(t_game *g)
+static int	file_exists(const char *filename)
 {
-	int	i;
-	int	j;
+	int	fd;
 
-	i = -1;
-	j = -1;
-	ft_printf ("\n");
-	while (++j < g->y_s)
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	close(fd);
+	return (1);
+}
+
+char	*check_args(t_game *g, int argc, char **argv)
+{
+	char	*file_name;
+
+	if (argc != 2)
 	{
-		while (++i < g->x_s)
-		{
-			ft_printf ("%c", g->map[j][i]);
-		}
-		ft_printf ("\n");
-		i = -1;
+		printf("Error\n: Number of arguments is incorrect\n");
+		g->state = ARG_ERROR;
+		return (NULL);
 	}
-	ft_printf ("\n");
-	return (IN_PLAY);
+	g->state = validate_file_name(argv[1]);
+	if (g->state == ARG_ERROR)
+	{
+		printf("Error\n: Map name is incorrect\n");
+		return (NULL);
+	}
+	file_name = ft_strjoin("./maps/", argv[1]);
+	if (!file_exists(file_name))
+	{
+		printf("Error\n: Map file does not exist\n");
+		free(file_name);
+		g->state = ARG_ERROR;
+		return (NULL);
+	}
+	return (file_name);
 }

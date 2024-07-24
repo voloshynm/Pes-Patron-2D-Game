@@ -24,7 +24,6 @@ static bool	is_accessible_player(t_game *g, int x_off, int y_off)
 
 static void	action_player(t_game *g)
 {
-	g->cnt->moves += 1;
 //	ft_printf("Steps made: %d\n", g->cnt->moves);
 	g->player->action = 0;
 	if (g->map[g->player->pos.y][g->player->pos.x] == 'F')
@@ -50,7 +49,6 @@ static void	action_player(t_game *g)
 		if (g->map[g->player->pos.y][g->player->pos.x] == '0')
 			g->map[g->player->pos.y][g->player->pos.x] = 'P';
 	}
-//	print_map(g);
 }
 
 void	move_player_vertically(t_game *g, int keycode)
@@ -61,6 +59,7 @@ void	move_player_vertically(t_game *g, int keycode)
 			g->map[g->player->pos.y][g->player->pos.x] = '0';
 		g->player->dir = MOVE_UP;
 		g->player->pos.y -= 1;
+		g->cnt->moves += 1;
 		action_player(g);
 	}
 	else if (keycode == BUT_DOWN && is_accessible_player(g, 0, 1))
@@ -69,6 +68,7 @@ void	move_player_vertically(t_game *g, int keycode)
 			g->map[g->player->pos.y][g->player->pos.x] = '0';
 		g->player->dir = MOVE_DOWN;
 		g->player->pos.y += 1;
+		g->cnt->moves += 1;
 		action_player(g);
 	}
 }
@@ -81,6 +81,7 @@ void	move_player_horizontally(t_game *g, int keycode)
 			g->map[g->player->pos.y][g->player->pos.x] = '0';
 		g->player->dir = MOVE_LEFT;
 		g->player->pos.x -= 1;
+		g->cnt->moves += 1;
 		action_player(g);
 	}
 	else if (keycode == BUT_RIGHT && is_accessible_player(g, 1, 0))
@@ -89,7 +90,7 @@ void	move_player_horizontally(t_game *g, int keycode)
 			g->map[g->player->pos.y][g->player->pos.x] = '0';
 		g->player->dir = MOVE_RIGHT;
 		g->player->pos.x += 1;
+		g->cnt->moves += 1;
 		action_player(g);
 	}
 }
-

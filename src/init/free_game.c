@@ -83,10 +83,7 @@ void	free_map(t_game *g)
 		g->foe = NULL;
 	}
 	if (g->cnt)
-	{
 		free(g->cnt);
-		g->cnt = NULL;
-	}
 	i = -1;
 	if (g->map)
 	{
@@ -101,7 +98,7 @@ void	free_map(t_game *g)
 void	free_game(t_game *g)
 {
 	if (!g)
-		return;
+		return ;
 	free_map(g);
 	if (g->texture)
 	{

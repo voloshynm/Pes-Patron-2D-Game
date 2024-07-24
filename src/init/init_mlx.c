@@ -20,8 +20,8 @@ void	init_mlx(t_game *g)
 		g->state = MLX_ERROR;
 		return ;
 	}
-	g->win_ptr = mlx_new_window(g->mlx_ptr, g->x_s * SPRITE_SIZE * SCALE_FACTOR,
-			g->y_s * SPRITE_SIZE * SCALE_FACTOR, WINDOW_NAME);
+	g->win_ptr = mlx_new_window(g->mlx_ptr, g->x_s * SPRITE_SIZE,
+			g->y_s * SPRITE_SIZE, WINDOW_NAME);
 	if (!g->win_ptr)
 	{
 		g->state = MLX_ERROR;
@@ -38,7 +38,7 @@ int	handle_close(t_game *g)
 
 void	init_hooks(t_game *g)
 {
-	mlx_key_hook(g->win_ptr, (int (*)(int, t_game *))key_press, g);
+	mlx_key_hook(g->win_ptr, key_press, g);
 	mlx_loop_hook(g->mlx_ptr, update_game, g);
 	mlx_hook(g->win_ptr, CLOSE_WIND, 0, handle_close, g);
 	mlx_loop(g->mlx_ptr);

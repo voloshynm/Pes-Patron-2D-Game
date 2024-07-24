@@ -24,11 +24,34 @@ int	key_press(int keycode, t_game *g)
 	}
 	return (0);
 }
+
+static int	update_game_helper(t_game *g, int animation_frame, int move_made)
+{
+	int	i;
+
+	if (animation_frame == 0)
+	{
+		move_foes(g);
+		if (g->player->action == 1 || g->player->action == 2
+			|| g->player->action == 3)
+			move_made = 1;
+	}
+	draw_game(g, animation_frame);
+	if (move_made && animation_frame == 7)
+	{
+		i = -1;
+		g->player->action = 0;
+		move_made = 0;
+		while (++i < g->cnt->foes && g->state == IN_PLAY)
+			g->foe[i].action = 0;
+	}
+	return (move_made);
+}
+
 // Delay in microseconds for ~24 FPS
 int	update_game(t_game *g)
 {
 	int			animation_frame;
-	int			i;
 	static int	frame = 0;
 	static int	move_made = 0;
 
@@ -38,21 +61,7 @@ int	update_game(t_game *g)
 	else
 	{
 		animation_frame = frame % 8;
-		if (animation_frame == 0)
-		{
-			move_foes(g);
-			if (g->player->action == 1 || g->player->action == 2 || g->player->action == 3)
-				move_made = 1;
-		}
-		draw_game(g, animation_frame);
-		if (move_made && animation_frame == 7)
-		{
-			i = -1;
-			g->player->action = 0;
-			move_made = 0;
-			while (++i < g->cnt->foes && g->state == IN_PLAY)
-				g->foe[i].action = 0;
-		}
+		move_made = update_game_helper(g, animation_frame, move_made);
 		frame++;
 	}
 	return (0);
@@ -70,9 +79,7 @@ void	end_game(t_game *g)
 			"  ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░▒████▓ ░██░░▒████▒░▒████▓ \n"
 			"   ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒     ▒▒▓  ▒ ░▓  ░░ ▒░ ░ ▒▒▓  ▒ \n"
 			" ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░     ░ ▒  ▒  ▒ ░ ░ ░  ░ ░ ▒  ▒ \n"
-			" ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░     ░ ░  ░  ▒ ░   ░    ░ ░  ░ \n"
 			" ░ ░         ░ ░     ░           ░     ░     ░  ░   ░    \n"
-			" ░ ░                           ░                  ░      \n"
 			"\nGAME OVER: Zombie killed you!\n");
 	}
 	else if (g->state == SUCCESS)

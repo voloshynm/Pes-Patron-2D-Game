@@ -128,8 +128,10 @@ int	init_map(t_game *g, char *file_name)
 	g->y_s = get_number_of_lines(file_name);
 	if (!g->y_s)
 		return (MAP_ERROR);
-	g->map = ft_calloc(g->y_s, sizeof(char *));
 	fd = open(file_name, O_RDONLY);
+	if (fd == -1)
+		return (ARG_ERROR);
+	g->map = ft_calloc(g->y_s, sizeof(char *));
 	while (++i < g->y_s)
 	{
 		g->map[i] = get_next_line(fd);
@@ -150,28 +152,32 @@ void	init_game(t_game *g, int argc, char **argv)
 {
 	char	*file_name;
 
-	g->state = validate_file_name(argv[1]);
-	if (argc != 2 || (argc == 2 && g->state == ARG_ERROR))
+	file_name = check_args(g, argc, argv);
+	if (!file_name)
+		return ;
+	g->state = init_map(g, file_name);
+	free(file_name);
+	if (g->state == MAP_ERROR)
 	{
-		ft_printf("Error\n: Number of arguments or map name is incorrect\n");
+		printf("Error\n: Chosen map is invalid, the game is not possible\n");
+		free(g->map);
 		return ;
 	}
 	g->texture = (t_texture *)malloc(sizeof(t_texture));
-	if (!g->texture)
+	if (!g->texture || g->state == ALLOC_ERROR)
 	{
 		g->state = ALLOC_ERROR;
+		printf("Error\n: Not enough memory, the game is not possible\n");
+		free_game(g);
 		return ;
 	}
-	file_name = ft_strjoin("./maps/", argv[1]);
-	g->state = init_map(g, file_name);
-	free(file_name);
 	init_mlx(g);
-	if (g->state == MAP_ERROR)
-		ft_printf("Error\n: Chosen map is invalid, the game is not possible\n");
-	else if (g->state == ALLOC_ERROR)
-		ft_printf("Error\n: Not enough memory, the game is not possible\n");
-	else if (g->state == MLX_ERROR)
-		ft_printf("Error\n: MLX lib issue or there are missing textures\n");
+	if (g->state == MLX_ERROR)
+	{
+		printf("Error\n: MLX lib issue or there are missing textures\n");
+		free_game(g);
+		return ;
+	}
 	else
 		init_hooks(g);
 }

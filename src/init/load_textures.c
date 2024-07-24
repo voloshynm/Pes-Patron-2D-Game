@@ -19,7 +19,7 @@ static char	*actor_sprite_location(char *actor_name, char *action, char *j_s,
 	int		len;
 
 	len = 10 + ft_strlen(actor_name) + 1 + ft_strlen(action)
-			+ 1 + ft_strlen(j_s) + 1 + ft_strlen(i_s) + 4 + 1;
+		+ 1 + ft_strlen(j_s) + 1 + ft_strlen(i_s) + 4 + 1;
 	result = (char *)malloc(len);
 	if (!result)
 		return (NULL);
@@ -40,7 +40,7 @@ static char	*item_sprite_location(char *item_name, char *i_s)
 	char	*result;
 	int		len;
 
-	len = 10 + ft_strlen(item_name) + 1	+ ft_strlen(i_s) + 4 + 1;
+	len = 10 + ft_strlen(item_name) + 1 + ft_strlen(i_s) + 4 + 1;
 	result = (char *)malloc(len);
 	if (!result)
 		return (NULL);
@@ -73,10 +73,7 @@ static void	load_actor(t_game *g, void *actor[4][8], char *actor_n
 			actor[j][i] = mlx_xpm_file_to_image(g->mlx_ptr, file_path,
 					&g->sprite_size, &g->sprite_size);
 			if (!actor[j][i])
-			{
 				g->state = MLX_ERROR;
-				ft_printf("Error: Failed to load image %s\n", file_path);
-			}
 			if (file_path)
 				free(file_path);
 			free(i_s);
@@ -85,7 +82,8 @@ static void	load_actor(t_game *g, void *actor[4][8], char *actor_n
 	}
 }
 
-static void	load_item(t_game *g, void *item_array[64], char *item_name, int size)
+static void	load_item(t_game *g, void *item_array[64], char *item_name
+					, int size)
 {
 	int		i;
 	char	*file_path;
@@ -125,6 +123,8 @@ void	load_textures(t_game *g)
 	load_actor(g, g->texture->foe_walk, "foe", "walk");
 	load_actor(g, g->texture->foe_hits, "foe", "hits");
 	load_actor(g, g->texture->foe_dead, "foe", "dead");
+	if (g->state == MLX_ERROR)
+		ft_printf("Error: Failed to load sprite images \n");
 	g->texture->keyframe = 0;
 	g->texture->frame = 0;
 }

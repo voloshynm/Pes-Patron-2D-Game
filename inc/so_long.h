@@ -40,7 +40,6 @@
 # define ENDC			"\033[0m"
 # define WINDOW_NAME	"WALKING DEAD GAME"
 # define SPRITE_SIZE	32
-# define SCALE_FACTOR	1
 
 enum e_state
 {
@@ -62,12 +61,12 @@ int			init_map(t_game *g, char *file_name);
 int			parse_map(t_game *g);
 int			init_map_counters(t_game *g);
 int			get_number_of_lines(char *file_name);
-int			validate_file_name(char *s);
+char		*check_args(t_game *g, int argc, char **argv);
 void		init_mlx(t_game *g);
 void		init_hooks(t_game *g);
 void		load_textures(t_game *g);
 void		free_game(t_game *g);
-int			print_map(t_game *g);
+//int			print_map(t_game *g);
 
 // Gameplay
 int			update_game(t_game *g);
@@ -86,9 +85,10 @@ void		free_bfs_state(t_bfs_state *state);
 
 // Draw textures
 void		draw_game(t_game *g, int animation_frame);
+void		draw_map(t_game *g, int animation_frame);
+void		draw_tile(t_game *g, void *item_array[64], t_point *pos);
+void		draw_gem(t_game *g, void *item_array[64], int f, t_point *pos);
 void		draw_player(t_game *g, int f);
 void		draw_foes(t_game *g, int f);
-void		draw_tile(t_game *g, void *item_array[64], int x, int y);
-void		draw_gem(t_game *g, void *item_array[64], int f, int x, int y);
 
 #endif
