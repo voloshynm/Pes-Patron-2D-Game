@@ -1,2 +1,2 @@
-# Pes-Patron-2D-Game
+# 2D Game
 So_long game
