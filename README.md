@@ -1,4 +1,5 @@
 # Zombie Game (So_Long)
+![image](https://github.com/user-attachments/assets/ca671f3e-8905-4836-b63f-e1a47eeab1bc)
 
 A classic 2D adventure game built with C and MinilibX, featuring maze exploration, collectible items, and strategic gameplay. This project implements fundamental game development concepts including sprite rendering, collision detection, and game state management.
 
@@ -34,13 +35,24 @@ cd Pes-Patron-2D-Game
 ```
 
 2. **Compile the project**:
+For no-zombie version:
 ```
 make
 ```
+For zombie-wanna-kill-you version:
+```
+make bonus
+```
+
 
 3. **Run the game**:
+For no-zombie version:
 ```
-./so_long maps/map1.ber
+./so_long big.ber
+```
+For zombie-wanna-kill-you version:
+```
+./so_long_bonus big_fire.ber
 ```
 
 ### Controls
